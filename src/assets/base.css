@@ -1,0 +1,29 @@
+
+/* semantic color variables for this project */
+:root {
+  --color-pastel-aqua: #A8DADC;
+  --color-pastel-mint: #F1FAEE;
+  --color-pastel-coral: #FFDDD2;
+  --color-pastel-lavender: #CDB4DB;
+  --color-pastel-lapis: #05668D;
+  --color-pastel-black: #28262C;
+  --color-pastel-white: #FFFFFF;
+}
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  transition: color 0.5s, background-color 0.5s;
+  font-family: Roboto, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
