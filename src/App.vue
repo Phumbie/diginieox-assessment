@@ -1,9 +1,13 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import MainLayout from './layouts/Main.vue'
 </script>
 
 <template>
-  <RouterView />
+  <MainLayout>
+    <router-view v-slot="{ Component }">
+      <component :is="Component" />
+    </router-view>
+  </MainLayout>
 </template>
 
