@@ -38,11 +38,12 @@ const props = defineProps({
 
 @media screen and (orientation: portrait) {
     .kanban-card{
-        max-width: 12.5rem;
+        width: 9.25rem;
         display: grid;
         place-items: center;
         height: 10rem;
-        overflow: scroll
+        overflow: scroll;
+        padding: 0.75rem
     }
 }
 </style>

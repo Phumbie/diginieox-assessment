@@ -47,6 +47,7 @@
 .loader__text-container {
     max-width: 40rem;
     text-align: center;
+    margin: auto
 }
 .loader__spinner.lds-ring {
     display: inline-block;
