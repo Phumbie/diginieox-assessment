@@ -75,10 +75,10 @@ const onEnd = (event) => {
             :animation="150"
             @end="onEnd"
         >
-            <template #item="{ element }">
-                <transition-group name="kanban-fade" tag="div">
+            <template #item="{ element , index}">
+                <transition-group name="kanban-fade" tag="div" :key="`${index}-${element.title}`">
                   <KanbanCard 
-                      :key="element.id"
+                      :key="`${index}-${element.title}`"
                       :content="element.title" 
                       :backgroundColor="element.color || '#F1FAEE'"
                   />
