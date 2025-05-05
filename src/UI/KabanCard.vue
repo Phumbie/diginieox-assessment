@@ -14,7 +14,7 @@ const props = defineProps({
 
 <template>
     <div :style="{ backgroundColor : backgroundColor }" class="kanban-card">
-        <p class="kanban_card_content">{{ content }}</p>
+        <p class="kanban-card__content">{{ content }}</p>
     </div>
 </template>
 
@@ -30,6 +30,10 @@ const props = defineProps({
 
 .kanban-card:hover{
    box-shadow: var(--shadow-element);     
+}
+
+.kanban-card__content {
+    /* Add any specific styles for the content element if needed */
 }
 
 @media screen and (orientation: portrait) {

@@ -4,17 +4,17 @@
 
 <template>
   <transition name="fade">
-    <div class="loader items-center" >
-      <div>
-        <div class="spinner-container">
-          <div class="lds-ring">
+    <div class="loader">
+      <div class="loader__content">
+        <div class="loader__spinner-container">
+          <div class="loader__spinner lds-ring">
             <div></div>
             <div></div>
             <div></div>
             <div></div>
           </div>
         </div>
-        <div class="text-container">
+        <div class="loader__text-container">
           <h2 class="heading-2">Loading...</h2>
           <p>Please wait while we load your data</p>
         </div>
@@ -25,15 +25,7 @@
 
 
 <style scoped>
-.spinner-container{
-    display: flex;
-    justify-content: center
-}
-  .text-container {
-    max-width: 40rem;
-    text-align: center
-  }
-  .loader {
+.loader {
     position: absolute;
     top: 0;
     left: 0;
@@ -44,14 +36,25 @@
     display: grid;
     place-items: center;
     z-index: 30;
-  }
-  .lds-ring {
+}
+.loader__content {
+    width: 100%;
+}
+.loader__spinner-container {
+    display: flex;
+    justify-content: center;
+}
+.loader__text-container {
+    max-width: 40rem;
+    text-align: center;
+}
+.loader__spinner.lds-ring {
     display: inline-block;
     position: relative;
     width: 9.2rem;
     height: 10rem;
-  }
-  .lds-ring div {
+}
+.loader__spinner.lds-ring div {
     box-sizing: border-box;
     display: block;
     position: absolute;
