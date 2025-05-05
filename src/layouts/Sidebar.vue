@@ -96,7 +96,7 @@ const sidebarLinks = [
   font-weight: 300; 
   font-size: 20px;
   line-height: 1.4;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.32px;
   text-transform: uppercase;
   margin-bottom: 0;
   color: var(--color-pastel-white);

@@ -108,7 +108,7 @@ const onEnd = (event) => {
 .kanban_header{
     margin-bottom: 1rem;
     color: var(--color-pastel-black);
-    line-height: 3rem;
+    line-height: 48px;
 }
 
 .error-card {
