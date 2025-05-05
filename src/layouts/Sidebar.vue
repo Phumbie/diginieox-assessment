@@ -1,7 +1,6 @@
 <script setup>
 import {ref, computed } from 'vue'
 
-
 const isSidebarExpanded = ref(false)
 
 const toggleMode = () => {
@@ -18,6 +17,29 @@ import notificationWhite from '../assets/icons/notification-white.svg'
 import settingsDark from '../assets/icons/settings-dark.svg'
 import settingsWhite from '../assets/icons/settings-white.svg'
 
+const sidebarLinks = [
+  {
+    path: '/',
+    label: 'Tasks',
+    iconActive: tasksDark,
+    iconInactive: tasksWhite,
+    alt: 'tasks',
+  },
+  {
+    path: '/notifications',
+    label: 'Notifications',
+    iconActive: notificationDark,
+    iconInactive: notificationWhite,
+    alt: 'notifications',
+  },
+  {
+    path: '/settings',
+    label: 'Settings',
+    iconActive: settingsDark,
+    iconInactive: settingsWhite,
+    alt: 'settings',
+  },
+];
 </script>
 <template>
     <aside class="sidebar-container" :class="{ expanded: isSidebarExpanded }">
@@ -27,28 +49,12 @@ import settingsWhite from '../assets/icons/settings-white.svg'
                     <img :src="menuWhite" alt="menu" class="nav-icon">
                 </div>
             </li>
-            <li>
-                <router-link to="/" v-slot="{isActive}">
-                        <div class="nav-item" :class="{ 'nav-labels__active': isActive }">
-                        <img :src="isActive ? tasksDark : tasksWhite" alt="tasks" class="nav-icon">
-                        <p class="nav-labels" v-show="isSidebarExpanded">Tasks</p>
-                        </div>
-                </router-link>
-            </li>
-              <li>
-                <router-link to="/notifications" v-slot="{isActive}">
-                        <div class="nav-item" :class="{ 'nav-labels__active': isActive }">
-                        <img :src="isActive ? notificationDark : notificationWhite" alt="tasks" class="nav-icon">
-                        <p class="nav-labels" v-show="isSidebarExpanded">Notifications</p>
-                        </div>
-                </router-link>
-            </li>
-               <li>
-                <router-link to="/settings" v-slot="{isActive}">
-                        <div class="nav-item" :class="{ 'nav-labels__active': isActive }">
-                        <img :src="isActive ? settingsDark : settingsWhite" alt="tasks" class="nav-icon">
-                        <p class="nav-labels" v-show="isSidebarExpanded">Settings</p>
-                        </div>
+            <li v-for="link in sidebarLinks" :key="link.path">
+                <router-link :to="link.path" v-slot="{ isActive }">
+                    <div class="nav-item" :class="{ 'nav-labels__active': isActive }">
+                        <img :src="isActive ? link.iconActive : link.iconInactive" :alt="link.alt" class="nav-icon">
+                        <p class="nav-labels" v-show="isSidebarExpanded">{{ link.label }}</p>
+                    </div>
                 </router-link>
             </li>
         </ul>
@@ -60,7 +66,7 @@ import settingsWhite from '../assets/icons/settings-white.svg'
     height: 100%;
     background-color: var(--color-pastel-lapis);
     transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
-    width: 4rem;
+    width: 4.6rem;
     overflow-x: hidden;
 }
 .sidebar-container.expanded {
