@@ -2,6 +2,7 @@
 import { ref, defineAsyncComponent, onMounted} from 'vue'
 import { storeToRefs } from 'pinia'
 import { useTasksStore } from '@/stores/tasks'
+import { BOARD_TYPES } from '../boardTypes'
 
 const Dialog = defineAsyncComponent(() => import('../UI/Dialog.vue'))
 import KanbanContainer from '../UI/KanbanContainer.vue'
@@ -10,6 +11,12 @@ import Loader from '../UI/Loader.vue'
 // Use tasks store
 const tasksStore = useTasksStore()
 const { todoTasks, inProgressTasks, doneTasks, board, loading } = storeToRefs(tasksStore)
+
+const columns = [
+  { title: 'To do', group: BOARD_TYPES.TODO, columnIndex: 0 },
+  { title: 'In progress', group: BOARD_TYPES.IN_PROGRESS, columnIndex: 1 },
+  { title: 'Done', group: BOARD_TYPES.DONE, columnIndex: 2 },
+]
 
 onMounted(() => {
   tasksStore.fetchTasks()
@@ -34,26 +41,13 @@ const handleTaskMoved = (event) => {
 <template>
   <Loader v-if="loading" />
   <div class="kaban-wrapper" v-if="!loading">
-    <KanbanContainer 
-      title="To do" 
-      :tasks="todoTasks" 
-      group="to-do"
+    <KanbanContainer
+      v-for="col in columns"
+      :key="col.group"
+      :title="col.title"
+      :group="col.group"
       @task-moved="handleTaskMoved"
-      :column-index="0"
-    />
-    <KanbanContainer 
-      title="In progress" 
-      :tasks="inProgressTasks" 
-      group="in-progress"
-      @task-moved="handleTaskMoved"
-      :column-index="1"
-    />
-    <KanbanContainer 
-      title="Done" 
-      :tasks="doneTasks" 
-      group="done"
-      @task-moved="handleTaskMoved"
-      :column-index="2"
+      :column-index="col.columnIndex"
     />
     <Dialog 
       v-if="showDialog" 
