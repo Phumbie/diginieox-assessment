@@ -97,12 +97,6 @@ const onEnd = (event) => {
     height: calc(100dvh - 11.25rem);
     overflow-y: auto;
     background: var(--color-pastel-white, #fff);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    transition: box-shadow 0.2s;
-}
-.kanban-container:focus-within {
-    box-shadow: 0 0 0 3px var(--color-pastel-blue, #457b9d);
-    outline: none;
 }
 
 .kanban_body{
@@ -115,9 +109,6 @@ const onEnd = (event) => {
     margin-bottom: 1rem;
     color: var(--color-pastel-black);
     line-height: 3rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
 }
 
 .error-card {

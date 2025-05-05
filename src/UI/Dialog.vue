@@ -54,27 +54,34 @@ const closeDialog = () => {
 
 .dialog-content{
     background-color: var(--color-pastel-white);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow-element);
     width: 580px;
-    border-radius: 4px;
     overflow: hidden;
     
 }
 
 .dialog_header{
-    padding: 16px;
+    padding: 1rem;
     background: var(--color-pastel-lapis);
     color: var(--color-pastel-white);
 }
 
 .dialog_body{
-    padding: 16px;
-    max-height: 300px;
+    padding: 1rem;
+    max-height: 15rem;
     overflow: scroll
 }
+
+.dialog_body pre{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 140%;
+  letter-spacing: 0.2px;
+}
 .dialog_footer{
-    padding: 16px;
+    padding: 1rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -84,13 +91,12 @@ button{
   font-weight: 500; 
   font-size: 16px;
   line-height: 140%;
-  letter-spacing: 0.01em; 
+  letter-spacing: 0.32px; 
   text-transform: uppercase;
   text-align: center;
   padding: 0; 
   display: inline-block;
   overflow: hidden;
-  height: 1.4em;
   vertical-align: baseline;
   border: none;
   outline: none;

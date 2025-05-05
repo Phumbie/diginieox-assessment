@@ -19,7 +19,7 @@ const columns = [
 ]
 
 onMounted(() => {
-  tasksStore.fetchTasks()
+  if(board.value.length === 0) tasksStore.fetchTasks()
 })
 
 const showDialog = ref(false)
