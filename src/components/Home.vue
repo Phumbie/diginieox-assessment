@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineAsyncComponent, onMounted, computed, watch } from 'vue'
+import { ref, defineAsyncComponent, onMounted} from 'vue'
 import { storeToRefs } from 'pinia'
 import { useTasksStore } from '@/stores/tasks'
 
@@ -20,11 +20,9 @@ const updatedBoard = ref(null)
 
 // Handle task movement
 const handleTaskMoved = (event) => {
-  // Use the store's moveTask method
   const movedTaskItem = tasksStore.moveTask(event)
 
   if (movedTaskItem) {
-    // Trigger dialog
     updatedBoard.value = board.value.find(col => col.title === event.newGroup)?.tasks
 
     showDialog.value = true

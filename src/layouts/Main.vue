@@ -29,10 +29,10 @@ const currentHeading = computed(() => {
 .main-content{
     width: 100%;
     height: 100vh;
-    padding: 48px;
+    padding: 3rem;
     overflow-y: scroll;
 }
 .main-heading{
-    margin-bottom: 48px;
+    margin-bottom: 3rem;
 }
 </style>

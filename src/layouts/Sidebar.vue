@@ -20,7 +20,7 @@ import settingsWhite from '../assets/icons/settings-white.svg'
 
 </script>
 <template>
-    <aside class="sidebar-container">
+    <aside class="sidebar-container" :class="{ expanded: isSidebarExpanded }">
         <ul>
             <li>
                 <div class="nav-item hamburger" @click="toggleMode">
@@ -59,16 +59,26 @@ import settingsWhite from '../assets/icons/settings-white.svg'
 .sidebar-container{
     height: 100%;
     background-color: var(--color-pastel-lapis);
-    transition: width 0.5s ease-in-out;
+    transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+    width: 4rem;
+    overflow-x: hidden;
+}
+.sidebar-container.expanded {
+    width: 18.75rem;
 }
 
 .nav-item{
     display: flex;
     align-items: center;
-    gap: 16px;
-    height: 64px;
-    margin-top: 48px;
-    padding: 0 10px;
+    gap: 1rem;
+    height: 4rem;
+    margin-top: 3rem;
+    padding: 0 0.625rem;
+    transition: background 0.2s, color 0.2s;
+}
+.nav-item:focus {
+    outline: 2px solid var(--color-pastel-white);
+    outline-offset: 2px;
 }
 
 .nav-item.hamburger{
@@ -86,8 +96,9 @@ import settingsWhite from '../assets/icons/settings-white.svg'
   color: var(--color-pastel-white);
 }
 .nav-icon{
-    width: 48px;
-    height: 48px;
+    width: 3rem;
+    height: 3rem;
+    flex-shrink: 0;
 }
 
 .nav-labels__active{

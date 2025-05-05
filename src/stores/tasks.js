@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-import { ref, reactive } from 'vue'
+import { ref} from 'vue'
+import { BOARD_TYPES } from '../boardTypes'
 
 export const useTasksStore = defineStore('tasks', () => {
   // Initial tasks data
@@ -22,9 +23,9 @@ export const useTasksStore = defineStore('tasks', () => {
       initialTasks.value = data;
       // Update board and local tasks
       board.value = [
-        { title: "to-do", tasks: initialTasks.value.filter((task) => task.status === "to-do") },
-        { title: "in-progress", tasks: initialTasks.value.filter((task) => task.status === "in-progress") },
-        { title: "done", tasks: initialTasks.value.filter((task) => task.status === "done") },
+        { title: BOARD_TYPES.TODO, tasks: initialTasks.value.filter((task) => task.status === BOARD_TYPES.TODO) },
+        { title: BOARD_TYPES.IN_PROGRESS, tasks: initialTasks.value.filter((task) => task.status === BOARD_TYPES.IN_PROGRESS) },
+        { title: BOARD_TYPES.DONE, tasks: initialTasks.value.filter((task) => task.status === BOARD_TYPES.DONE) },
       ];
       updateLocalTaskArrays();
     } catch (e) {
@@ -35,9 +36,9 @@ export const useTasksStore = defineStore('tasks', () => {
   }
 
   // Computed properties for tasks
-  const todoTasks = ref(board.value.find((col) => col.title === "to-do")?.tasks || []);
-  const inProgressTasks = ref(board.value.find((col) => col.title === "in-progress")?.tasks || []);
-  const doneTasks = ref(board.value.find((col) => col.title === "done")?.tasks || []);
+  const todoTasks = ref(board.value.find((col) => col.title === BOARD_TYPES.TODO)?.tasks || []);
+  const inProgressTasks = ref(board.value.find((col) => col.title === BOARD_TYPES.IN_PROGRESS)?.tasks || []);
+  const doneTasks = ref(board.value.find((col) => col.title === BOARD_TYPES.DONE)?.tasks || []);
 
   // Function to move task between columns
   function moveTask(event) {
@@ -45,7 +46,7 @@ export const useTasksStore = defineStore('tasks', () => {
 
     // Find source and destination columns
     const sourceColumn = board.value.find((col) => col.title === oldGroup);
-    const destColumn = board.value.find((col) => col.title === newGroup);
+    const destColumn = board.value.find((col) => col.title === newGroup); // No change needed here, event uses values
 
     if (!sourceColumn || !destColumn) {
       console.error("Invalid column");
@@ -69,9 +70,9 @@ export const useTasksStore = defineStore('tasks', () => {
 
   // Update local task arrays
   function updateLocalTaskArrays() {
-    todoTasks.value = board.value.find((col) => col.title === "to-do")?.tasks || [];
-    inProgressTasks.value = board.value.find((col) => col.title === "in-progress")?.tasks || [];
-    doneTasks.value = board.value.find((col) => col.title === "done")?.tasks || [];
+    todoTasks.value = board.value.find((col) => col.title === BOARD_TYPES.TODO)?.tasks || [];
+    inProgressTasks.value = board.value.find((col) => col.title === BOARD_TYPES.IN_PROGRESS)?.tasks || [];
+    doneTasks.value = board.value.find((col) => col.title === BOARD_TYPES.DONE)?.tasks || [];
   }
 
   return {

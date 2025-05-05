@@ -2,6 +2,7 @@
 import { ref, defineProps, defineEmits, computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useTasksStore } from '@/stores/tasks'
+import { BOARD_TYPES } from '../boardTypes'
 import draggable from 'vuedraggable'
 import KanbanCard from './KabanCard.vue'
 
@@ -26,21 +27,21 @@ const emit = defineEmits(['task-moved'])
 const taskList = computed({
     get: () => {
         switch(props.group) {
-            case 'to-do': return todoTasks.value || []
-            case 'in-progress': return inProgressTasks.value || []
-            case 'done': return doneTasks.value || []
+            case BOARD_TYPES.TODO: return todoTasks.value || []
+            case BOARD_TYPES.IN_PROGRESS: return inProgressTasks.value || []
+            case BOARD_TYPES.DONE: return doneTasks.value || []
             default: return []
         }
     },
     set: (newValue) => {
         switch(props.group) {
-            case 'to-do': 
+            case BOARD_TYPES.TODO: 
                 todoTasks.value = newValue
                 break
-            case 'in-progress': 
+            case BOARD_TYPES.IN_PROGRESS: 
                 inProgressTasks.value = newValue
                 break
-            case 'done': 
+            case BOARD_TYPES.DONE: 
                 doneTasks.value = newValue
                 break
         }
@@ -48,13 +49,6 @@ const taskList = computed({
 })
 
 const onEnd = (event) => {
-    console.log('Full event object:', event)
-    console.log('Old Index:', event.oldIndex)
-    console.log('New Index:', event.newIndex)
-    console.log('Old Group:', event.from.dataset.group)
-    console.log('New Group:', event.to.dataset.group)
-
-    // Only emit if the task has actually moved
     if ( event.from.dataset.group !== event.to.dataset.group) {
         emit('task-moved', {
             oldIndex: event.oldIndex,
@@ -65,30 +59,6 @@ const onEnd = (event) => {
     } 
 }
 
-const onAdd = (event) => {
-    console.log('Add event:', event.item)
-    // Additional logic for adding tasks if needed
-}
-
-const draggingItem = ref(null)
-
-const onStart = (event) => {
-    console.log('Start event:', event)
-    const item = taskList.value[event.oldIndex]
-    
-    // Mark the item as dragging
-    item.isDragging = true
-    draggingItem.value = item
-    
-    // Move the item to the top of the list within its own column
-    taskList.value.splice(event.oldIndex, 1)
-    taskList.value.unshift(item)
-    
-    // Ensure the dragging card appears at the top
-    event.from.insertBefore(event.item, event.from.firstChild)
-}
-
-// Tasks are now managed directly through the computed property
 </script>
 
 <template>
@@ -106,10 +76,13 @@ const onStart = (event) => {
             @end="onEnd"
         >
             <template #item="{ element }">
-                <KanbanCard 
-                    :content="element.title" 
-                    :backgroundColor="element.color || '#F1FAEE'"
-                />
+                <transition-group name="kanban-fade" tag="div">
+                  <KanbanCard 
+                      :key="element.id"
+                      :content="element.title" 
+                      :backgroundColor="element.color || '#F1FAEE'"
+                  />
+                </transition-group>
             </template>
         </draggable>
     </div>
@@ -117,45 +90,74 @@ const onStart = (event) => {
 
 <style scoped>
 .kanban-container{
-    border: 4px solid var(--color-pastel-black);
-    border-radius: 4px;
-    padding: 16px;
+    border: 0.25rem solid var(--color-pastel-black);
+    border-radius: 0.5rem;
+    padding: 1rem;
     width: 100%;
-    height: calc(100dvh - 180px);
-    overflow: scroll;
+    height: calc(100dvh - 11.25rem);
+    overflow-y: auto;
+    background: var(--color-pastel-white, #fff);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s;
+}
+.kanban-container:focus-within {
+    box-shadow: 0 0 0 3px var(--color-pastel-blue, #457b9d);
+    outline: none;
 }
 
 .kanban_body{
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 1.5rem;
 }
 
 .kanban_header{
-        margin-bottom: 16px;
-        color: var(--color-pastel-black);
-        line-height: 48px
+    margin-bottom: 1rem;
+    color: var(--color-pastel-black);
+    line-height: 3rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
 }
 
 .error-card {
     background-color: #ffdddd;
     color: #ff0000;
-    padding: 16px;
-    border-radius: 4px;
-    margin-bottom: 16px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
     text-align: center;
+}
+
+.kanban-fade-enter-active, .kanban-fade-leave-active {
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.kanban-fade-enter-from, .kanban-fade-leave-to {
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+}
+.kanban-fade-enter-to, .kanban-fade-leave-from {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 @media screen and (orientation: portrait) {
   .kanban-container{
-    height: 100%
+    height: 100%;
+    min-width: 0;
   }
-
   .kanban_body{
     flex-direction: row;
-    gap: 24px;
+    gap: 1.5rem;
+  }
 }
+
+/* Accessibility: focus for draggable area */
+.kanban_body:focus {
+  outline: 2px solid var(--color-pastel-blue, #457b9d);
+  outline-offset: 2px;
 }
+
 </style>
 
     
