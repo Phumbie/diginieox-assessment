@@ -1,18 +1,63 @@
 <script setup>
-import { ref , defineAsyncComponent} from 'vue'
-const Dialog =  defineAsyncComponent(()=> import('../UI/Dialog.vue'))
+import { ref, defineAsyncComponent, onMounted, computed, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useTasksStore } from '@/stores/tasks'
+
+const Dialog = defineAsyncComponent(() => import('../UI/Dialog.vue'))
 import KanbanContainer from '../UI/KanbanContainer.vue'
 
-const showDialog = ref(true)
+// Use tasks store
+const tasksStore = useTasksStore()
+const { todoTasks, inProgressTasks, doneTasks, board } = storeToRefs(tasksStore)
+
+const showDialog = ref(false)
+const updatedBoard = ref(null)
+
+// Handle task movement
+const handleTaskMoved = (event) => {
+  // Use the store's moveTask method
+  const movedTaskItem = tasksStore.moveTask(event)
+
+  if (movedTaskItem) {
+    // Trigger dialog
+    updatedBoard.value = board.value.find(col => col.title === event.newGroup)?.tasks
+
+    showDialog.value = true
+  }
+}
+
+
 </script>
 <template>
   <div class="kaban-wrapper">
-    <KanbanContainer />
-    <KanbanContainer />
-    <KanbanContainer />
-    <!-- <Dialog :display="showDialog" /> -->
+    <KanbanContainer 
+      title="To do" 
+      :tasks="todoTasks" 
+      group="to-do"
+      @task-moved="handleTaskMoved"
+      :column-index="0"
+    />
+    <KanbanContainer 
+      title="In progress" 
+      :tasks="inProgressTasks" 
+      group="in-progress"
+      @task-moved="handleTaskMoved"
+      :column-index="1"
+    />
+    <KanbanContainer 
+      title="Done" 
+      :tasks="doneTasks" 
+      group="done"
+      @task-moved="handleTaskMoved"
+      :column-index="2"
+    />
+    <Dialog 
+      v-if="showDialog" 
+      :display="showDialog" 
+      :data="updatedBoard" 
+      @close="showDialog = false" 
+    />
   </div>
-
 </template>
 <style scoped>
 .kaban-wrapper{

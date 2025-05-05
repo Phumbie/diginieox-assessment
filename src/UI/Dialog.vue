@@ -7,12 +7,12 @@ const props = defineProps({
     default: false
   },
   data: {
-    type: Object,
-    default: () => ({
+    type: Array,
+    default: () => ([{
     "title": "Simplicity is the ultimate sophistication.",
     "color": "#F1FAEE",
     "status": "in-progress"
-  })
+  }])
   }
 })
 
@@ -70,6 +70,8 @@ const closeDialog = () => {
 
 .dialog_body{
     padding: 16px;
+    max-height: 300px;
+    overflow: scroll
 }
 .dialog_footer{
     padding: 16px;

@@ -31,7 +31,7 @@ import settingsWhite from '../assets/icons/settings-white.svg'
                 <router-link to="/" v-slot="{isActive}">
                         <div class="nav-item" :class="{ 'nav-labels__active': isActive }">
                         <img :src="isActive ? tasksDark : tasksWhite" alt="tasks" class="nav-icon">
-                        <p class="nav-labels" v-if="isSidebarExpanded">Tasks</p>
+                        <p class="nav-labels" v-show="isSidebarExpanded">Tasks</p>
                         </div>
                 </router-link>
             </li>
@@ -39,7 +39,7 @@ import settingsWhite from '../assets/icons/settings-white.svg'
                 <router-link to="/notifications" v-slot="{isActive}">
                         <div class="nav-item" :class="{ 'nav-labels__active': isActive }">
                         <img :src="isActive ? notificationDark : notificationWhite" alt="tasks" class="nav-icon">
-                        <p class="nav-labels" v-if="isSidebarExpanded">Notifications</p>
+                        <p class="nav-labels" v-show="isSidebarExpanded">Notifications</p>
                         </div>
                 </router-link>
             </li>
@@ -47,7 +47,7 @@ import settingsWhite from '../assets/icons/settings-white.svg'
                 <router-link to="/settings" v-slot="{isActive}">
                         <div class="nav-item" :class="{ 'nav-labels__active': isActive }">
                         <img :src="isActive ? settingsDark : settingsWhite" alt="tasks" class="nav-icon">
-                        <p class="nav-labels" v-if="isSidebarExpanded">Settings</p>
+                        <p class="nav-labels" v-show="isSidebarExpanded">Settings</p>
                         </div>
                 </router-link>
             </li>
@@ -57,10 +57,9 @@ import settingsWhite from '../assets/icons/settings-white.svg'
 
 <style scoped>
 .sidebar-container{
-    min-width: 72px;
     height: 100%;
     background-color: var(--color-pastel-lapis);
-    transition: width 0.3s ease-in-out;
+    transition: width 0.5s ease-in-out;
 }
 
 .nav-item{
