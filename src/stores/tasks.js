@@ -46,7 +46,7 @@ export const useTasksStore = defineStore('tasks', () => {
 
     // Find source and destination columns
     const sourceColumn = board.value.find((col) => col.title === oldGroup);
-    const destColumn = board.value.find((col) => col.title === newGroup); // No change needed here, event uses values
+    const destColumn = board.value.find((col) => col.title === newGroup);
 
     if (!sourceColumn || !destColumn) {
       console.error("Invalid column");

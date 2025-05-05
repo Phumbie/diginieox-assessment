@@ -51,10 +51,10 @@ const sidebarLinks = [
             </li>
             <li v-for="link in sidebarLinks" :key="link.path">
                 <router-link :to="link.path" v-slot="{ isActive }">
-                    <div class="nav-item" :class="{ 'nav-labels__active': isActive }">
+                        <div class="nav-item" :class="{ 'nav-labels__active': isActive }">
                         <img :src="isActive ? link.iconActive : link.iconInactive" :alt="link.alt" class="nav-icon">
                         <p class="nav-labels" v-show="isSidebarExpanded">{{ link.label }}</p>
-                    </div>
+                        </div>
                 </router-link>
             </li>
         </ul>
