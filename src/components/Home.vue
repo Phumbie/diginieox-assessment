@@ -5,10 +5,15 @@ import { useTasksStore } from '@/stores/tasks'
 
 const Dialog = defineAsyncComponent(() => import('../UI/Dialog.vue'))
 import KanbanContainer from '../UI/KanbanContainer.vue'
+import Loader from '../UI/Loader.vue'
 
 // Use tasks store
 const tasksStore = useTasksStore()
-const { todoTasks, inProgressTasks, doneTasks, board } = storeToRefs(tasksStore)
+const { todoTasks, inProgressTasks, doneTasks, board, loading } = storeToRefs(tasksStore)
+
+onMounted(() => {
+  tasksStore.fetchTasks()
+})
 
 const showDialog = ref(false)
 const updatedBoard = ref(null)
@@ -29,7 +34,8 @@ const handleTaskMoved = (event) => {
 
 </script>
 <template>
-  <div class="kaban-wrapper">
+  <Loader v-if="loading" />
+  <div class="kaban-wrapper" v-if="!loading">
     <KanbanContainer 
       title="To do" 
       :tasks="todoTasks" 
